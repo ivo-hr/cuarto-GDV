@@ -1,0 +1,246 @@
+//Eva Sanchez Muñoz
+//VJ60 
+
+#include <algorithm>
+#include <assert.h>
+#include <unordered_map>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <stdexcept>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <map>
+#include <list>
+
+using namespace std;
+
+using medico = string;
+using paciente = string;
+
+struct fecha
+{
+    int dia;
+    int hora;
+    int minuto;
+
+    bool operator<(const fecha& other) const
+    {
+        if (dia < other.dia ||
+            (dia == other.dia && hora < other.hora) ||
+            (dia == other.dia && hora == other.hora && minuto < other.minuto))
+            return true;
+
+        return false;
+    }
+
+    
+};
+
+class consultorio
+{
+protected:
+
+    unordered_map<medico, map<fecha, paciente>> visita;
+
+public:
+
+    consultorio() {}
+
+    void nuevoMedico(std::string medic)
+    {
+        auto it = visita.find(medic);
+
+        if (it == visita.end())
+            visita.insert({ medic, {} });
+        else
+            throw domain_error("Medico duplicado");
+    }
+
+    void pideConsulta(std::string pacient, std::string medic, fecha cita)
+    {
+        auto i = visita.find(medic);
+
+        if (i != visita.end())
+        {
+            auto j = i->second.find(cita);
+
+            if (j != i->second.end())
+                throw domain_error("Fecha ocupada");
+
+            i->second.insert({ cita, pacient });
+
+        }
+
+        else
+            throw domain_error("Medico inexistente");
+    }
+
+    std::string siguientePaciente(std::string medic)
+    {
+        auto i = visita.find(medic);
+
+        if (i != visita.end())
+        {
+            auto j = i->second.begin();
+
+            return j->second;
+        }
+
+        else
+            throw domain_error("Medico inexistente");
+    }
+
+    void atiendeConsulta(std::string medic)
+    {
+        auto i = visita.find(medic);
+
+        if (i != visita.end())
+        {
+            auto j = i->second.begin();
+
+            if (j != i->second.end())
+                i->second.erase(j);
+            else
+                throw domain_error("No hay pacientes");
+        }
+
+        else
+            throw domain_error("Medico inexistente");
+    }
+
+    list<pair<fecha, paciente>> listaPacientes(string medic, int dia)
+    {
+        auto i = visita.find(medic);
+
+        if (i != visita.end())
+        {
+            list<pair<fecha, paciente>> pacientes;
+
+            if (i->second.empty())
+                return pacientes;
+
+            for (auto i : i->second)
+            {
+                fecha aux = i.first;
+
+                if (dia == aux.dia)
+                    pacientes.push_back(i);
+            }
+
+            return pacientes;
+        }
+
+        else
+            throw domain_error("Medico inexistente");
+    }
+};
+
+void resuelve(consultorio* c, string accion)
+{
+    try
+    {
+        if (accion == "nuevoMedico")
+        {
+            string medic;
+            cin >> medic;
+
+            c->nuevoMedico(medic);
+        }
+
+        else if (accion == "pideConsulta")
+        {
+            string pacient, medic;
+            cin >> pacient >> medic;
+
+            int dia, hora, minuto;
+            cin >> dia >> hora;
+
+            char aux;
+            cin >> aux >> minuto;
+
+            c->pideConsulta(pacient, medic, { dia, hora, minuto });
+        }
+
+        else if (accion == "siguientePaciente")
+        {
+            string medic;
+            cin >> medic;
+
+            cout << "Siguiente paciente doctor " << medic << "\n" << c->siguientePaciente(medic) << "\n";
+        }
+
+        else if (accion == "atiendeConsulta")
+        {
+            string medic;
+            cin >> medic;
+
+            c->atiendeConsulta(medic);
+        }
+
+        else
+        {
+            string medic;
+            cin >> medic;
+
+            int dia;
+            cin >> dia;
+
+            cout << "Doctor " << medic << " dia " << dia << '\n';
+            
+            auto pacientes = c->listaPacientes(medic, dia);
+
+            //std::setfill('0') << std::setw(5)
+            for (auto i : pacientes)
+                cout << i.second << " " << setfill('0') << setw(2) << i.first.hora << ":" << setfill('0') << setw(2) << i.first.minuto << '\n';
+        }
+    }
+
+    catch (domain_error& e) {
+        cout << e.what() << '\n';
+    }
+}
+
+bool resuelveCaso()
+{
+    int nAcciones;
+    cin >> nAcciones;
+
+    if (!cin)
+        return false;
+
+    consultorio* c = new consultorio;
+
+    for (int i = 0; i < nAcciones; i++)
+    {
+        std::string accion;
+        cin >> accion;
+
+        resuelve(c, accion);
+    }
+
+    cout << "---\n";
+
+    return true;
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    while (resuelveCaso());
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

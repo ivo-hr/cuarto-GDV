@@ -1,0 +1,123 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <unordered_map>
+#include <map>
+#include <vector>
+#include <algorithm>
+
+using namespace std; 
+
+struct InfoDeporte
+{
+    string name; 
+
+    int participantes; 
+
+    std::unordered_map<string, int> alumnos; 
+
+    bool operator<(const InfoDeporte& other)
+    {
+        return (participantes < other.participantes ||
+            (participantes == other.participantes &&
+            name < other.name)); 
+    }
+
+    bool operator>(const InfoDeporte& other)
+    {
+        return (participantes > other.participantes ||
+            (participantes == other.participantes &&
+                name < other.name));
+    }
+};
+
+bool resuelveCaso()
+{
+    std::unordered_map<string, InfoDeporte> deportes;
+    std::unordered_map<string, int> nombresVetados; 
+
+    std::string accion; 
+    std::cin >> accion;
+
+    if (!cin)
+        return false; 
+
+    std::string sport; 
+
+    while (accion != "_FIN_")
+    {
+        if (isupper(accion[0]))
+        {
+            deportes.insert({ accion, {accion, 0, {}} });
+            sport = accion; 
+        }
+
+        else
+        {
+            auto it = deportes.find(sport);
+
+            bool eliminado = false; 
+
+            for (auto i = deportes.begin(); i != deportes.end(); i++)
+            {
+                if (i->second.alumnos[accion])
+                {
+                    if (i->first != it->first)
+                    {
+                        i->second.alumnos.erase(accion);
+
+                        i->second.participantes--;
+
+                        nombresVetados[accion] = 1; 
+                    }
+
+                    eliminado = true;
+                }
+            }
+
+            if (!eliminado && !nombresVetados[accion])
+            {
+                it->second.name = sport; 
+
+                it->second.alumnos[accion] = 1;
+
+                it->second.participantes++; 
+            }
+        }
+            
+        std::cin >> accion; 
+    }
+
+    std::vector<InfoDeporte> listado; 
+
+    for (auto i : deportes)
+        listado.push_back(i.second); 
+
+    std::sort(listado.begin(), listado.end(), greater<>()); 
+
+    for (auto i : listado)
+        std::cout << i.name << " " << i.participantes << "\n";
+
+    cout << "---\n"; 
+
+    return true; 
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    while (resuelveCaso()); 
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

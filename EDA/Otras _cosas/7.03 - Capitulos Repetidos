@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <unordered_map>
+#include <map>
+#include <vector>
+#include <algorithm>
+
+using namespace std; 
+
+void resuelveCaso()
+{
+    unordered_map<int, int> emisiones;
+
+    int N, capitulo; 
+    std::cin >> N;
+
+    int episodios = 0; 
+    int episodiosMax = 0;
+    int pos = 0;
+
+    for (int i = 0; i < N; i++) 
+    {
+        std::cin >> capitulo;
+
+        if (emisiones.count(capitulo) > 0 && pos <= emisiones[capitulo])
+            pos = emisiones[capitulo] + 1;
+
+        emisiones[capitulo] = i;
+
+        episodios = (i - pos) + 1;
+
+        if (episodiosMax < episodios)
+            episodiosMax = episodios;
+    }
+
+    std::cout << episodiosMax << "\n";
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

@@ -1,0 +1,124 @@
+﻿//Sebastian Sanchez Castelli-Gair
+//VJ57
+
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include "bintree_eda.h"
+
+using namespace std;
+
+bool primo(int n) {
+
+    if (n == 0 || n == 1 || n == 4)
+        return false;
+
+    int i = 2;
+    while (i < n / 2) {
+        if (n % i == 0)
+            return false;
+        ++i;
+    }
+
+    return true;
+}
+
+// función que resuelve el problema
+bool resolver(const bintree<int>& b, int& valor, int& prof) {
+    
+    if (b.empty())
+        return false;
+    
+    prof++;
+    valor = b.root();
+
+    if (primo(valor)) { //si es primo volvemos, no encontrado
+        prof--;
+        return false;
+    }
+
+    if (b.root() % 7 == 0) //si es multiplo de 7 devolvemos con valor encontrado
+    {
+        return true;
+    }
+
+    if (b.left().empty() && b.right().empty()) //no hemos encontrado un multiplo de 7 por este camino
+    {
+        prof--;
+        return false;
+    }
+
+    int valL, valR, profL = prof, profR = prof;
+
+    //probamos un nivel por cada lado
+    bool solL = resolver(b.left(), valL, profL);
+    bool solR = resolver(b.right() , valR, profR);
+
+    if (!solL && !solR)
+        return false;
+
+    if (!solL)
+    {
+        valor = valR; prof = profR;
+        return true;
+
+    }
+    
+    if (!solR)
+    {
+        valor = valL; prof = profL;
+        return true;
+
+    }
+
+
+    if (profL <= profR) {
+        valor = valL; prof = profL;
+    }
+    else {
+        valor = valR; prof = profR;        
+    }
+
+    return true;
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    // leer los datos de la entrada
+    bintree<int> b;
+    
+    b = leerArbol(-1);
+    
+    int prof = 0; int val = -1;
+    bool sol = resolver(b, val, prof);
+
+    // escribir sol
+    sol ?  cout << val << ' ' << prof << '\n' : cout << "NO HAY\n";
+    
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+    #ifndef DOMJUDGE
+     std::ifstream in("datos.txt");
+     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+     #endif 
+    
+    
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    
+    // Para restablecer entrada. Comentar para acepta el reto
+     #ifndef DOMJUDGE // para dejar todo como estaba al principio
+     std::cin.rdbuf(cinbuf);
+     system("PAUSE");
+     #endif
+    
+    return 0;
+}

@@ -1,0 +1,108 @@
+﻿//
+//#include <iostream>
+//#include <iomanip>
+//#include <fstream>
+//#include <vector>
+//using namespace std;
+//
+//bool esSol(int n, int k) { //si estan colocados todos los artistas
+//    return n - 1 == k;
+//}
+//
+//bool tieneSentidoContinuar(int k, int donacionesActuales, int maxDonaciones, const vector<int>& maxBenPos) {
+//
+//    return donacionesActuales + maxBenPos[k] > maxDonaciones;
+//}
+//
+//bool valida(int k, const vector<int>& sol, const vector<bool>& seleccionados, const vector<vector<bool>>& consentimientos) {
+//    return (((k > 0 && consentimientos[sol[k]][sol[k - 1]]) || k==0) && !seleccionados[sol[k]]);
+//}
+//
+//// función que resuelve el problema
+//void resolver(int n, int k, int donacionesActuales, int& maxDonaciones, vector<int>& sol, vector<bool>& seleccionados, vector<vector<int>>& beneficios, vector<vector<bool>>& consentimientos, vector<int>& maxBenPos) {
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        sol[k] = i;
+//
+//        donacionesActuales += beneficios[i][k];
+//
+//        if (valida(k, sol, seleccionados, consentimientos)) {
+//            seleccionados[i] = true;
+//            if (esSol(n, k)) {
+//                if (donacionesActuales > maxDonaciones)
+//                    maxDonaciones = donacionesActuales;
+//            }
+//            else {
+//                if(tieneSentidoContinuar(k, donacionesActuales, maxDonaciones, maxBenPos))
+//                    resolver(n, k + 1, donacionesActuales, maxDonaciones, sol, seleccionados, beneficios, consentimientos, maxBenPos);
+//            }
+//            seleccionados[i] = false;
+//        }
+//
+//        donacionesActuales -= beneficios[i][k];
+//
+//    }
+//}
+//
+//// Resuelve un caso de prueba, leyendo de la entrada la
+//// configuración, y escribiendo la respuesta
+//void resuelveCaso() {
+//    // leer los datos de la entrada
+//    int n;
+//    cin >> n;
+//    vector<vector<int>> beneficios(n, vector<int>(n));
+//    vector<vector<bool>> consentimientos(n, vector<bool>(n));
+//    vector<int> maxBenPos(n, -1);
+//        
+//    for (int i = 0; i < n; ++i)
+//        for (int j = 0; j < n; ++j) {
+//            cin >> beneficios[i][j];
+//            if (beneficios[i][j] > maxBenPos[j])
+//                maxBenPos[j] = beneficios[i][j];
+//        }
+//
+//    for (int i = n - 1; i >= 0; i--)
+//    {
+//        if(i != n-1)
+//         maxBenPos[i] += maxBenPos[i + 1];
+//    }
+//
+//    for (int i = 0; i < n; ++i)
+//        for (int j = 0; j < n; ++j) {
+//            int b;
+//            cin >> b;
+//            consentimientos[i][j] = b;
+//        }
+//
+//    vector<int> sol(n); vector<bool> seleccionados(n, false);
+//    int maxDonaciones = -1;
+//    resolver(n, 0, 0, maxDonaciones, sol, seleccionados, beneficios, consentimientos, maxBenPos);
+//    // salida
+//    if (maxDonaciones == -1)
+//        cout << "NEGOCIA CON LOS ARTISTAS\n";
+//    else
+//        cout << maxDonaciones << '\n';
+//}
+//
+////#define DOMJUDGE
+//int main() {
+//    // Para la entrada por fichero.
+//    // Comentar para acepta el reto
+//#ifndef DOMJUDGE
+//    std::ifstream in("datos.txt");
+//    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+//#endif
+//    int numCasos;
+//    std::cin >> numCasos;
+//    for (int i = 0; i < numCasos; ++i)
+//        resuelveCaso();
+//
+//    // Para restablecer entrada. Comentar para acepta el reto
+//#ifndef DOMJUDGE // para dejar todo como estaba al principio
+//    std::cin.rdbuf(cinbuf);
+//    //system("PAUSE");
+//#endif
+//
+//    return 0;
+//}

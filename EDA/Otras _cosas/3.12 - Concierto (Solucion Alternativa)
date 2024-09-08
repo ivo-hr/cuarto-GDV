@@ -1,0 +1,117 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+bool esValida(const vector<int>& sol, const vector<bool>& seleccionados, 
+    const vector<vector<bool>>& disponibilidad, int k)
+{
+    return (((k > 0 && disponibilidad[sol[k]][sol[k - 1]]) || k == 0) && !seleccionados[sol[k]]);
+}
+
+void concierto(vector<int>& sol, vector<bool>& seleccionados, 
+    vector<vector<int>>& recaudaciones, vector<vector<bool>>& disponibilidad, 
+    int k, int& dinero, int& maxDinero, const int artistas)
+{
+    for (int i = 0; i < artistas; i++)
+    {
+        sol[k] = i; 
+
+        dinero += recaudaciones[i][k]; 
+
+        if (esValida(sol, seleccionados, disponibilidad, k))
+        {
+            seleccionados[i] = true;
+
+            if (k == artistas - 1)
+            {
+                if (dinero > maxDinero)
+                    maxDinero = dinero;
+            }
+
+            else
+                concierto(sol, seleccionados, recaudaciones, 
+                    disponibilidad, k + 1, dinero, maxDinero, artistas);
+
+            seleccionados[i] = false;
+        }
+
+        dinero -= recaudaciones[i][k]; 
+    }
+}
+
+void resuelveCaso()
+{
+    int artistas, aux; 
+    cin >> artistas; 
+
+    vector<vector<int>> recaudaciones(artistas); 
+    vector<vector<bool>> disponibilidad(artistas);
+
+    vector<int> auxiliar(artistas); 
+
+    for (int i = 0; i < artistas; i++)
+    {
+        for (int j = 0; j < artistas; j++)
+            cin >> auxiliar[j]; 
+        
+        recaudaciones[i] = auxiliar;
+    }
+
+    vector<bool> auxiliarBool(artistas);
+
+    for (int i = 0; i < artistas; i++)
+    {
+        for (int j = 0; j < artistas; j++)
+        {
+            cin >> aux; 
+
+            if (aux == 0)
+                auxiliarBool[j] = false;
+            else
+                auxiliarBool[j] = true; 
+        }
+
+        disponibilidad[i] = auxiliarBool; 
+    }
+
+    auxiliarBool = { false, false, false }; 
+    auxiliar = { 0, 0, 0 };
+
+    int dinero = 0; 
+    int maxDinero = 0; 
+
+    concierto(auxiliar, auxiliarBool, recaudaciones, disponibilidad, 0, dinero, maxDinero, artistas);
+
+    if (maxDinero > 0)
+        cout << maxDinero << "\n";
+    else
+        cout << "NEGOCIA CON LOS ARTISTAS\n"; 
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    int n;
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+        resuelveCaso();
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

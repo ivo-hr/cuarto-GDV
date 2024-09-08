@@ -1,0 +1,80 @@
+//Eva Sanchez Muñoz
+//VJ60 
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include <stack>
+#include <vector>
+
+using namespace std;
+
+int resolver(const vector<int>& caucasicos, int ini, int fin, bool& esCaucasico)
+{
+    int mitad = (ini + fin) / 2;
+
+    if (fin <= ini + 1)
+    {
+        if (caucasicos[ini] % 2 == 0)
+            return 1; 
+        
+        return 0; 
+    } 
+
+    int der = resolver(caucasicos, ini, mitad, esCaucasico);
+    int izq = resolver(caucasicos, mitad, fin, esCaucasico);
+
+    if (abs(der - izq) > 2)
+        esCaucasico = false; 
+
+    return izq + der; 
+}
+
+bool resuelveCaso()
+{
+    int n; 
+    cin >> n; 
+
+    if (n == 0)
+        return false;
+
+    vector<int>caucasicos(n);
+
+    for (int i = 0; i < n; i++)
+        cin >> caucasicos[i];
+
+    bool esCaucasico = true; 
+
+    int aux = resolver(caucasicos, 0, n, esCaucasico);
+
+    if (esCaucasico)
+        cout << "SI\n";
+    else
+        cout << "NO\n"; 
+
+    return true;
+}
+
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+
+    while (resuelveCaso());
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

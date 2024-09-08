@@ -1,0 +1,112 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+struct canciones
+{
+    int duracion; 
+    int puntuacion;
+
+    bool usada; 
+};
+
+bool isValida(const vector<canciones> sol, int i, int tiempoCara, const int tiempoMax)
+{
+    return tiempoCara <= tiempoMax && !sol[i].usada; 
+}
+
+void casanova(vector<canciones>& sol, int k,  
+    int& tiempoCara1, int& tiempoCara2, const int& tiempoMax, 
+    int& puntosObtenidos, int& puntosMaxObtenidos)
+{
+    puntosMaxObtenidos = max(puntosMaxObtenidos, puntosObtenidos);
+
+    for (int i = 0; i < sol.size(); i++)
+    {
+        puntosObtenidos += sol[k].puntuacion;
+        tiempoCara1 += sol[k].duracion;
+
+        if (isValida(sol, k, tiempoCara1, tiempoMax))
+        {
+            sol[k].usada = true;
+
+            casanova(sol, k + 1, tiempoCara1, tiempoCara2, tiempoMax,
+                puntosObtenidos, puntosMaxObtenidos);
+
+            sol[k].usada = false;
+        }
+
+        tiempoCara1 -= sol[k].duracion;
+        tiempoCara2 += sol[k].duracion;
+
+        if (isValida(sol, k, tiempoCara2, tiempoMax))
+        {
+            sol[k].usada = true;
+
+            casanova(sol, k + 1, tiempoCara1, tiempoCara2, tiempoMax,
+                puntosObtenidos, puntosMaxObtenidos);
+
+            sol[k].usada = false;
+        }
+
+        tiempoCara2 -= sol[k].duracion;
+        puntosObtenidos -= sol[k].puntuacion;
+    }
+}
+
+bool resuelveCaso()
+{
+    int nCanciones; 
+    cin >> nCanciones; 
+
+    if (nCanciones == 0)
+        return false; 
+
+    int tiempo; 
+    cin >> tiempo; 
+
+    vector<canciones> sol(nCanciones);
+
+    for (int i = 0; i < nCanciones; i++)
+    {
+        cin >> sol[i].duracion; 
+        cin >> sol[i].puntuacion; 
+
+        sol[i].usada = false; 
+    }
+
+    int puntosObtenidos = 0; 
+    int maxPuntosObtenidos = 0; 
+    int tiempoCara1 = 0, tiempoCara2 = 0; 
+
+    casanova(sol, 0, tiempoCara1, tiempoCara2, tiempo, puntosObtenidos, maxPuntosObtenidos);
+
+    if (maxPuntosObtenidos > 0)
+        cout << maxPuntosObtenidos << "\n"; 
+
+    return true; 
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    while (resuelveCaso()); 
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

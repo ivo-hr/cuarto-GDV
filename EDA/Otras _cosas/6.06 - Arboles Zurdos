@@ -1,0 +1,85 @@
+﻿//Sebastian Sanchez Castelli-Gair
+//VJ57
+
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include "bintree_eda.h"
+
+using namespace std;
+
+// función que resuelve el problema
+int resolver(const bintree<char>& b) {
+    
+    if (b.empty())
+        return 1;
+
+    if (b.left().empty() && b.right().empty())
+        return 1;
+
+    if (b.left().empty())
+        return 0;
+
+    int hojasL;
+    hojasL = resolver(b.left());
+
+    if (b.right().empty()) {
+        if (hojasL > 0)
+            return hojasL + 1;
+        return hojasL; //si hemos encontrado un arbol no zurdo
+    }
+        
+
+    if (hojasL <= 0)
+        return 0;
+
+    int hojasR; 
+    hojasR = resolver(b.right());
+    if (hojasR <= 0)
+        return 0;
+
+    if (hojasL - hojasR > 0)
+        return hojasL + hojasR + 1;
+
+    return 0;
+
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    // leer los datos de la entrada
+    bintree<char> b;
+
+    b = leerArbol('.');
+    
+    int sol = resolver(b);
+    // escribir sol
+    sol > 0 ? cout << "SI\n" : cout << "NO\n";
+    
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+    #ifndef DOMJUDGE
+     std::ifstream in("datos.txt");
+     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+     #endif 
+    
+    
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    
+    // Para restablecer entrada. Comentar para acepta el reto
+     #ifndef DOMJUDGE // para dejar todo como estaba al principio
+     std::cin.rdbuf(cinbuf);
+     system("PAUSE");
+     #endif
+    
+    return 0;
+}
