@@ -1,53 +1,48 @@
-// EnriqueJG
-
+//Enrique JG
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <string>
-
-
-
+#include <sstream>
 
 bool resuelveCaso() {
-    // leer los datos de la entrada
+    // Número de elementos en el caso actual
+    int numElementos;
 
-    int numCasos, numElementos;
+    // Leer el número de elementos para este caso
+    if (!(std::cin >> numElementos))
+        return false;  // Fin de la entrada
+
+    // Si el número de elementos es 0, imprimir una línea en blanco y terminar
+    if (numElementos == 0) {
+        std::cout << std::endl;
+        return true;
+    }
+
+    // Ignorar el salto de línea que queda en el buffer después de leer numElementos
+    std::cin.ignore();  
+
     std::string datos;
-    if (!(std::cin >> numCasos))
-        return false; 
+    std::getline(std::cin, datos);  // Leer la línea completa de números
 
-    std::cin >> numElementos;
-    std::cin >> datos;
+    // Creamos un stringstream para dividir los números
+    std::istringstream iss(datos);
     std::string salida = "";
+    int numero;
 
-    for (int i = 0; i < numCasos; i++)
-    {
-        //Coger cada número separado por un espacio y multiplicarlo por 2
+    // Extraemos cada número, lo multiplicamos por 2 y construimos la cadena de salida
+    for (int i = 0; i < numElementos; ++i) {
+        iss >> numero;
+        salida += std::to_string(numero * 2) + " ";
+    }
 
-        int j = 0;
-        int k = 0;
-        while (i < numElementos)
-        {
-            std::string num = "";
-
-            if (datos[k] == ' ')
-                k++;
-            
-            else while (k < datos.size() && datos[k] != ' ')
-            {
-                num += datos[k];
-                k++;
-            }
-
-            salida += std::to_string(std::stoi(num) * 2) + " ";
-            i++;
-        }
-        
-
+    if (!salida.empty()) {
+        salida.pop_back(); // Eliminamos el último espacio en blanco
     }
 
     std::cout << salida << std::endl;
+
     return true;
 }
 
@@ -56,12 +51,10 @@ int main() {
     // Comentar para acepta el reto
 #ifndef DOMJUDGE
     std::ifstream in("datos.txt");
-    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); // Guardar el buffer viejo y redirigir std::cin a datos.txt
 #endif 
 
-
     while (resuelveCaso());
-
 
     // Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio
