@@ -1,0 +1,87 @@
+﻿//Sebastian Sanchez Castelli-Gair
+//VJ57
+
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include "bintree_eda.h"
+
+using namespace std;
+
+// función que resuelve el problema
+bool resolver(const bintree<int>& b, int& generaciones) {
+    
+    if (b.empty())
+        return true;
+    
+    generaciones++;
+
+    if (b.left().empty() && b.right().empty())
+        return true;
+
+    //sera correcto si edades correctas
+
+    if (b.left().empty() && !b.right().empty()) //hijo colocado incorrectamente
+        return false;
+
+    if (b.left().root() + 18 > b.root())
+        return false;
+
+    if (!b.left().empty() && b.right().empty()) //diferencia de mas de 18
+    {
+        return resolver(b.left(), generaciones);
+    }
+
+    if (!b.left().empty() && !b.right().empty())
+        if (b.right().root() + 2 > b.left().root())
+            return false;
+
+    //correctos los hijos?
+    int genL = generaciones, genR = generaciones;
+    bool solL = resolver(b.left(), genL); bool solR = resolver(b.right(), genR);
+    generaciones = max(genL, genR);
+
+    return solL && solR;
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    // leer los datos de la entrada
+    bintree<int> b;
+    b = leerArbol(-1);
+    
+    int generaciones = 0;
+    bool sol = resolver(b, generaciones);
+
+    // escribir sol
+    sol ? cout << "SI " << generaciones : cout << "NO";
+
+    cout << '\n';
+    
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+    #ifndef DOMJUDGE
+     std::ifstream in("datos.txt");
+     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+     #endif 
+    
+    
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    
+    // Para restablecer entrada. Comentar para acepta el reto
+     #ifndef DOMJUDGE // para dejar todo como estaba al principio
+     std::cin.rdbuf(cinbuf);
+     system("PAUSE");
+     #endif
+    
+    return 0;
+}

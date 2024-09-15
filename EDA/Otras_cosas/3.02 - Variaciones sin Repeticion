@@ -1,0 +1,85 @@
+//Eva Sanchez Muñoz
+//VJ60 
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void escribir(vector<char>& letras)
+{
+    int tam = letras.size();
+
+    for (int i = 0; i < tam; i++)
+        cout << letras[i];
+
+    cout << "\n";
+}
+
+bool esValida(vector<char>& sol, int k)
+{
+    for (int i = 0; i < k; ++i)
+        if (sol[i] == sol[k])
+            return false;
+
+    return true;
+}
+
+void letras(vector<char>& sol, int n, int k, int tam)
+{
+    for (char c = 'a'; c < 'a' + n; c++)
+    {
+        sol[k] = c;
+
+        if (esValida(sol, k))
+        {
+            if (k == tam - 1)
+                escribir(sol);
+
+            else
+                letras(sol, n, k + 1, tam);
+        }
+    }
+}
+
+bool resuelveCaso()
+{
+    int numElem, tamPal;
+    cin >> numElem >> tamPal;
+
+    if (!cin)
+        return false;
+
+    vector<char> sol(numElem);
+
+    if (tamPal > 0)
+        letras(sol, numElem, 0, tamPal);
+
+    cout << "\n";
+
+    return true;
+}
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+
+    while (resuelveCaso());
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

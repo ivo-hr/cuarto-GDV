@@ -1,0 +1,278 @@
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <fstream>
+#include <map>
+#include <unordered_map>
+#include <utility>
+#include <list>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+using DNI = string; 
+
+struct Conductor
+{
+    string DNI; 
+
+    int puntos; 
+
+    int diasCambio; 
+
+    bool operator>(const Conductor& other)
+    {
+        return diasCambio > other.diasCambio;
+    }
+};
+
+int MAX_PUNTOS = 15; 
+
+int dia = 0; 
+
+class Carnet
+{
+private:
+
+    unordered_map<DNI, Conductor> carnet;  
+
+    vector<int> conductoresPuntos;
+
+
+public:
+
+    Carnet()
+    {
+        conductoresPuntos = vector<int>(MAX_PUNTOS + 1); 
+
+        for (int i = 0; i < MAX_PUNTOS + 1; i++)
+            conductoresPuntos[i] = 0; 
+    }
+
+    void nuevo(const string& DNI)
+    {
+        auto it = carnet.find(DNI); 
+
+        if (it == carnet.end())
+        {
+            carnet.insert({ DNI, {DNI, 15, dia} });
+
+            conductoresPuntos[15]++; 
+
+            dia++; 
+        }
+        else
+            throw domain_error("Conductor duplicado");
+    }
+
+    void quitar(const string& DNI, int puntos)
+    {
+        auto it = carnet.find(DNI);
+
+        if (it != carnet.end())
+        {
+            if (it->second.puntos != 0)
+            {
+                conductoresPuntos[it->second.puntos]--;
+
+                if (it->second.puntos - puntos < 0)
+                    it->second.puntos = 0;
+                else
+                    it->second.puntos -= puntos;
+
+                conductoresPuntos[it->second.puntos]++;
+
+                it->second.diasCambio = dia;
+                dia++;
+            }
+        }
+
+        else
+            throw domain_error("Conductor inexistente");
+    }
+
+    void recuperar(const string& DNI, int puntos)
+    {
+        auto it = carnet.find(DNI);
+
+        if (it != carnet.end())
+        {
+            if (it->second.puntos != MAX_PUNTOS)
+            {
+                conductoresPuntos[it->second.puntos]--;
+
+                if (it->second.puntos + puntos > MAX_PUNTOS)
+                    it->second.puntos = MAX_PUNTOS;
+                else
+                    it->second.puntos += puntos;
+
+                conductoresPuntos[it->second.puntos]++;
+
+                it->second.diasCambio = dia;
+                dia++;
+            }
+        }
+
+        else
+            throw domain_error("Conductor inexistente");
+    }
+
+    int consultar(const string& DNI)
+    {
+        auto it = carnet.find(DNI);
+
+        if (it != carnet.end())
+            return it->second.puntos; 
+        else
+            throw domain_error("Conductor inexistente");
+    }
+
+    int cuantos_con_puntos(int puntos)
+    {
+        if (puntos < 0 || puntos > MAX_PUNTOS)
+            throw domain_error("Puntos no validos");
+
+        return conductoresPuntos[puntos];
+    }
+
+    vector<string> lista_por_puntos(int puntos)
+    {
+        if (puntos < 0 || puntos > MAX_PUNTOS)
+            throw domain_error("Puntos no validos");
+        else
+        {
+            vector<Conductor> conductoresAuxiliar(conductoresPuntos[puntos]);
+
+            int contador = 0; 
+
+            for (auto i : carnet)
+            {
+                if (i.second.puntos == puntos)
+                {
+                    conductoresAuxiliar[contador].DNI = i.first; 
+                    conductoresAuxiliar[contador].diasCambio = i.second.diasCambio;
+                    contador++; 
+                }
+            }
+
+            sort(conductoresAuxiliar.begin(), conductoresAuxiliar.end(), greater<>()); 
+
+            vector<string>conductores(conductoresPuntos[puntos]); 
+
+            for (int i = 0; i < conductoresAuxiliar.size(); i++)
+                conductores[i] = conductoresAuxiliar[i].DNI; 
+
+            return conductores; 
+        }
+    }
+};
+
+bool resuelveCaso()
+{
+    string comando;
+    cin >> comando;
+
+    if (!cin) 
+        return false;
+
+    Carnet* carnet = new Carnet;
+
+    while (comando != "FIN") 
+    {
+        try 
+        {
+            if (comando == "nuevo") 
+            {
+                string DNI;
+                cin >> DNI; 
+
+                carnet->nuevo(DNI); 
+            }
+
+            else if (comando == "cuantos_con_puntos") 
+            {
+                int puntos; 
+                cin >> puntos;
+
+                int points = carnet->cuantos_con_puntos(puntos); 
+
+                cout << "Con " << puntos << " puntos hay " << points << "\n"; 
+            }
+
+            else if (comando == "quitar") 
+            {
+                string DNI;
+                int puntos; 
+
+                cin >> DNI >> puntos;
+
+                carnet->quitar(DNI, puntos); 
+            }
+
+            else if (comando == "recuperar")
+            {
+                string DNI;
+                int puntos; 
+                cin >> DNI >> puntos;
+
+                carnet->recuperar(DNI, puntos);
+            }
+
+            else if (comando == "consultar")
+            {
+                string DNI;
+                cin >> DNI;
+
+                int points = carnet->consultar(DNI); 
+
+                cout << "Puntos de " << DNI << ": " << points << "\n";
+            }
+
+            else
+            {
+                int puntos;
+                cin >> puntos;
+
+                vector<string> listado = carnet->lista_por_puntos(puntos); 
+
+                cout << "Tienen " << puntos << " puntos:"; 
+
+                for (auto i : listado)
+                    cout << " " << i;
+
+                cout << "\n"; 
+            }
+        }
+
+        catch (std::exception& e) {
+            cout << "ERROR: " << e.what() << "\n";
+        }
+
+        cin >> comando;
+    }
+
+    cout << "---\n";
+
+    return true;
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    while (resuelveCaso());
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

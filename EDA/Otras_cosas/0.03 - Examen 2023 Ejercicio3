@@ -1,0 +1,156 @@
+﻿
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct problema {
+    string veredicto;
+    int numIntentos;
+};
+
+struct equipo {
+    int numResueltos = 0;
+    int tiempo = 0;
+    map<string, problema> resultados;
+
+    bool operator>(const equipo& other) {
+        return (numResueltos > other.numResueltos) ||
+            (numResueltos == other.numResueltos && tiempo < other.tiempo);
+    }
+
+    bool operator==(const equipo& other) {
+        return numResueltos == other.numResueltos &&
+            tiempo == other.tiempo;
+    }
+};
+
+struct equipOrden {
+    string nombre;
+    equipo resultEquipo;
+
+    bool operator>(const equipOrden& other) {
+        return (resultEquipo > other.resultEquipo) ||
+            (resultEquipo == other.resultEquipo && nombre < other.nombre);
+    }
+};
+
+class clasificacion {
+    map<string, equipo> equipos;
+    vector<equipOrden> ordenados;
+public:
+
+    void nuevoCaso(string equipo, string problema, int minuto, string veredicto) {
+        auto i = equipos.find(equipo);
+
+        if (i != equipos.end()) { //encontrado el equipo
+            auto j = i->second.resultados.find(problema);
+
+            if (j != i->second.resultados.end()) { //encontrado el problema 
+
+                if (j->second.veredicto != "AC") { //hacemos algo si no estaba ya resuelto
+
+                    if (veredicto == "AC") {
+                        i->second.numResueltos++;
+                        i->second.tiempo += (minuto + 20 * j->second.numIntentos);
+                    }
+                    else {
+                        j->second.numIntentos++;
+                    }
+
+                    j->second.veredicto = veredicto;
+                }
+            }
+            else { //nuevo problema
+                if (veredicto == "AC") {
+                    i->second.numResueltos++;
+                    i->second.tiempo += minuto;
+                    i->second.resultados.insert({ problema, {veredicto, 0} });
+                }
+                else
+                    i->second.resultados.insert({ problema, {veredicto, 1} });
+
+            }
+        }
+        else { //nuevo equipo
+            if (veredicto == "AC") {
+                equipos.insert({ equipo, { 1, minuto, {} } });
+                equipos[equipo].resultados.insert( { problema, {veredicto, 0} });
+            }
+            else {
+                equipos.insert({ equipo, { 0, 0, {} } });
+                equipos[equipo].resultados.insert({ problema, {veredicto, 1} });
+            }
+        }
+    }
+
+    void ordenaEquipos() {
+        for (auto i : equipos) {
+            ordenados.push_back({ i.first, {i.second.numResueltos, i.second.tiempo, {}} });
+        }
+
+        sort(ordenados.begin(), ordenados.end(), greater<>());
+
+    }
+
+    void muestraClasificacion() {
+
+        for (auto i : ordenados)
+            cout << i.nombre << ' ' << i.resultEquipo.numResueltos << ' ' << i.resultEquipo.tiempo << '\n';
+    }
+};
+
+void procesaEnvios(clasificacion& c) {
+    string equipo, problema, veredicto;
+    int minuto;
+
+    cin >> equipo;
+    while (equipo != "FIN") {
+        cin >> problema >> minuto >> veredicto;
+
+        c.nuevoCaso(equipo, problema, minuto, veredicto);
+
+        cin >> equipo;
+    }
+
+
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    
+    clasificacion c;
+    
+    procesaEnvios(c);
+
+    c.ordenaEquipos();
+    // Se imprime la salida
+    c.muestraClasificacion();
+    cout << "---\n";
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

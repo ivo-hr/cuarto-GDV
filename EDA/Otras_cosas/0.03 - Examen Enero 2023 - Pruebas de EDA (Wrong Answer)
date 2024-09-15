@@ -1,0 +1,166 @@
+/*
+Da un fallo debido a que estan contandose todos los fallos incorrectos, pero solo deben tenerse en cuenta los incorrectos realizados por los ejercicios
+que han obtenido un resultado bien 
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <unordered_map>
+#include <map>
+#include <vector>
+#include <algorithm>
+
+using namespace std; 
+
+struct Resultados
+{
+    int resueltos;
+
+    int tiempo;
+
+    bool corregidos;
+
+    std::unordered_map<std::string, std::string> ejercicios;
+};
+
+struct EquipoFinal
+{
+    std::string nombre;
+
+    int tiempo; 
+
+    int resultados; 
+
+    bool operator<(const EquipoFinal& other) const
+    {
+        if (resultados > other.resultados ||
+            (resultados == other.resultados &&
+                tiempo < other.tiempo) ||
+            (resultados == other.resultados &&
+                tiempo == other.tiempo &&
+                nombre < other.nombre))
+            return false;
+
+        return true;
+    }
+
+    bool operator>(const EquipoFinal& other) const
+    {
+        if (resultados < other.resultados ||
+            (resultados == other.resultados &&
+                tiempo > other.tiempo) || 
+            (resultados == other.resultados &&
+                tiempo == other.tiempo && 
+                nombre > other.nombre))
+            return false;
+
+        return true;
+    }
+};
+
+using nombreEquipo = std::string;
+
+using Equipos = std::map<nombreEquipo, Resultados>;
+
+std::vector<EquipoFinal> verifica(Equipos& resultados)
+{
+    std::vector<EquipoFinal> team;
+
+    for (auto it : resultados)
+    {
+        if (it.second.corregidos)
+        {
+            for (auto i = it.second.ejercicios.begin(); i != it.second.ejercicios.end(); i++)
+            {
+                if (i->second != "AC")
+                    it.second.tiempo += 20;
+            }
+        }
+
+        team.push_back({it.first, it.second.tiempo, it.second.resueltos });
+    }
+
+    return team; 
+}
+
+void procesaEnvios(Equipos& resultados)
+{
+    std::string equipo, problema, veredicto;
+    int minuto;
+
+    std::cin >> equipo;
+
+    while (equipo != "FIN")
+    {
+        std::cin >> problema >> minuto >> veredicto;
+
+        auto it = resultados.find(equipo);
+
+        if (it == resultados.end())
+        {
+            if (veredicto == "AC")
+                resultados.insert({ equipo, {1, minuto, true, {}} });
+
+            else
+                resultados.insert({ equipo, {0, 0, false, {}} });
+
+            auto aux = resultados.find(equipo);
+            aux->second.ejercicios[problema] = veredicto;
+        }
+
+        else
+        {
+            it->second.ejercicios[problema] = veredicto; 
+
+            if (veredicto == "AC")
+            {
+                it->second.corregidos = true;
+
+                it->second.resueltos++; 
+
+                it->second.tiempo += minuto; 
+            }
+        }
+
+        std::cin >> equipo;
+    }
+
+    std::vector<EquipoFinal> teams = verifica(resultados); 
+
+    std::sort(teams.begin(), teams.end(), greater<>()); 
+
+    for (auto i = teams.begin(); i != teams.end(); i++)
+        std::cout << i->nombre << " " << i->resultados << " " << i->tiempo << "\n";
+
+    std::cout << "---\n";
+}
+
+void resuelveCaso()
+{
+    Equipos resultados;
+
+    procesaEnvios(resultados);
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

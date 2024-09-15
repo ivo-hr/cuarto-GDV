@@ -1,0 +1,72 @@
+﻿//Sebastian Sanchez Castelli-Gair
+//VJ57
+
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include "bintree_eda.h"
+
+using namespace std;
+
+// función que resuelve el problema
+int resolver(const bintree<char>& b, int& lineaRecta) { //linea recta es el camino que solo usa uno de los hijos mas larga
+    
+    if (b.empty()) {
+        lineaRecta = 0;
+        return 0;
+    }
+
+    if (b.left().empty() && b.right().empty()) {
+        lineaRecta = 1;
+        return 1;
+    }
+
+    int lRectL = 0, lRectR = 0;
+    int dL = resolver(b.left(), lRectL);
+    int dR = resolver(b.right(), lRectR);
+    //lineaRecta = lRectL + lRectR + 1;
+    lineaRecta = max(lRectL, lRectR) + 1;
+
+    //return max(max(dL, dR) + 1, lineaRecta);
+    return max(max(dL, dR), lRectL + lRectR + 1);
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    // leer los datos de la entrada
+    bintree<char> b;
+
+    b = leerArbol('.');
+    
+    int i = 0;
+    int sol = resolver(b, i);
+    // escribir sol
+    cout << max(sol, i) << '\n';
+    
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+    #ifndef DOMJUDGE
+     std::ifstream in("datos.txt");
+     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+     #endif 
+    
+    
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    
+    // Para restablecer entrada. Comentar para acepta el reto
+     #ifndef DOMJUDGE // para dejar todo como estaba al principio
+     std::cin.rdbuf(cinbuf);
+     system("PAUSE");
+     #endif
+    
+    return 0;
+}

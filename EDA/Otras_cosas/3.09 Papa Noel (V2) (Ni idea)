@@ -1,0 +1,139 @@
+//Eva Sanchez Muñoz
+//VJ60 
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+void procesaSolucion(const vector<pair<string, int>>& solucion)
+{
+    for (int i = 0; i < solucion.size(); i++)
+        cout << solucion[i].second << ' ';
+
+    cout << '\n';
+}
+
+bool esValida(const vector<pair<string, int>>& solucion, vector<int> satisfaccion, int min, int i)
+{
+    if ((i % 2 == 0) ||
+        (solucion[i].first != solucion[i - 1].first &&
+            solucion[i].second > solucion[i - 1].second &&
+        satisfaccion[i] + satisfaccion[i - 1] >= min))
+        return true;
+
+    return false;
+}
+
+
+void resolver(int ninos, int juguetes, int k, int min,
+    vector<pair<string, int>> solucion,
+    vector<pair<string, int>>& tiposJuguete,
+    vector<vector<int>>satisfaccion, bool& haySol)
+{
+    for (int i = 0; i < juguetes; i++)
+    {
+        if (tiposJuguete[i].second > 0)
+        {
+            solucion[k].first = tiposJuguete[i].first;
+            solucion[k].second = i;
+            
+            if (esValida(solucion, satisfaccion[k/2], min, k/2))
+            {
+                tiposJuguete[i].second -= 1;
+
+                if (k == (ninos * 2) - 1)
+                {
+                    procesaSolucion(solucion);
+                    haySol = true;
+                }
+
+                else
+                    resolver(ninos, juguetes, k + 1, min, solucion, tiposJuguete, satisfaccion, haySol);
+
+                tiposJuguete[i].second += 1;
+            }
+        }
+
+    }
+}
+
+bool resuelveCaso()
+{
+    int juguetes, ninos, satisfaccion;
+    cin >> juguetes;
+
+    if (!std::cin)
+        return false;
+
+    cin >> ninos >> satisfaccion;
+
+    vector<pair<string, int>> tiposJuguete(juguetes);
+
+    int nJuguetes;
+
+    for (int i = 0; i < juguetes; i++)
+    {
+        cin >> nJuguetes;
+
+        tiposJuguete[i].second = nJuguetes;
+    }
+
+    string nombreJuguete;
+
+    for (int i = 0; i < juguetes; i++)
+    {
+        cin >> nombreJuguete;
+
+        tiposJuguete[i].first = nombreJuguete;
+    }
+
+    vector<vector<int>> satisfaccionNinos(ninos);
+    vector<int> satisfaccionRegalos(juguetes);
+
+    for (int i = 0; i < ninos; i++)
+    {
+        for (int j = 0; j < juguetes; j++)
+            cin >> satisfaccionRegalos[j];
+
+        satisfaccionNinos[i] = satisfaccionRegalos;
+    }
+
+    vector<pair<string, int>> solucion(2 * juguetes);
+
+    bool haySol = false;
+
+    resolver(ninos, juguetes, 0, satisfaccion, solucion, tiposJuguete, satisfaccionNinos, haySol);
+
+    if (!haySol)
+        cout << "SIN SOLUCION\n";
+
+    cout << '\n';
+
+
+    return true;
+
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    while (resuelveCaso())
+        ;
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

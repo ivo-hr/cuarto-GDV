@@ -1,0 +1,96 @@
+//Eva Sanchez Muñoz
+//VJ60 
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+
+#include "Set.h"
+
+using namespace std;
+
+int calculo(int n)
+{
+    int aux = 0;
+
+    while (n / 10 > 0)
+    {
+        aux += (n % 10) * (n % 10);
+        n /= 10;
+    }
+
+    aux += (n % 10) * (n % 10);
+
+    return aux; 
+}
+
+bool esFeliz(Set<int>& numeros, vector<int>& sol, const int n)
+{
+    bool ciclo = false; 
+
+    int aux = n; 
+
+    sol.push_back(n); 
+    numeros.add(n); 
+
+    while (!ciclo && aux != 1)
+    {
+        aux = calculo(aux); 
+
+        sol.push_back(aux); 
+
+        if (numeros.contains(aux))
+            ciclo = true;
+        else
+            numeros.add(aux); 
+    }
+
+    return aux == 1; 
+}
+
+bool resuelveCaso()
+{
+    int n;
+    cin >> n;
+
+    if (!cin)
+        return false;
+
+    vector<int> sol; 
+
+    Set<int>numeros;
+
+    bool ciclo = esFeliz(numeros, sol, n);
+
+    for (auto i : sol)
+        cout << i << " "; 
+
+    if (ciclo)
+        cout << 1 << "\n";
+    else
+        cout << 0 << "\n";
+
+    return true;
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+
+    while (resuelveCaso());
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

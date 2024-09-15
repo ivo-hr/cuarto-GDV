@@ -1,0 +1,109 @@
+//Eva Sanchez Muñoz
+//VJ60 
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+void procesaSolucion(const vector<pair<string, int>>& solucion) {
+
+    for (int i = 0; i < solucion.size(); i++)
+    {
+        cout << solucion[i].second << ' ';
+
+    }
+    cout << '\n';
+}
+
+bool esValida(const vector<pair<string, int>>& solucion, const vector<string>& juguetes, int i) {
+
+    if (i % 2 == 0)
+        return true;
+
+    if (solucion[i].first != solucion[i - 1].first && solucion[i].second > solucion[i - 1].second)
+        return true;
+
+    return false;
+}
+
+// función que resuelve el problema
+void resolver(int m, int n, int k, vector<pair<string, int>> solucion, const vector<string>& tiposJuguete, bool& haySol) {
+
+    for (int i = 0; i < m; i++) //para cada juguete
+    {
+        solucion[k] = { tiposJuguete[i], i };
+        
+        if (esValida(solucion, tiposJuguete, k)) {
+
+            if (k == (n * 2) - 1) {
+                procesaSolucion(solucion);
+                haySol = true;
+            }
+            else
+                resolver(m, n, k + 1, solucion, tiposJuguete, haySol);
+        }
+    }
+
+    
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+bool resuelveCaso() {
+    // leer los datos de la entrada
+    int m, n;
+
+    cin >> m;
+
+    if (! std::cin)
+        return false;
+    
+    cin >> n;
+
+    vector<string> tiposJuguete(m);
+    string juguete;
+
+    for (int i = 0; i < m; i++)
+    {   
+        cin >> juguete;
+        tiposJuguete[i] = juguete;
+    }
+
+    vector<pair<string, int>> solucion(2*n);
+    bool haySol = false;
+
+    resolver(m, n, 0, solucion, tiposJuguete, haySol);
+    
+    // escribir sol
+    if (!haySol)
+        cout << "SIN SOLUCION\n";
+    cout << '\n';
+    
+    
+    return true;
+    
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    while (resuelveCaso())
+        ;
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

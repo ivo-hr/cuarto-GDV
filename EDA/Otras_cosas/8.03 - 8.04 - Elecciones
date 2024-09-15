@@ -1,0 +1,190 @@
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <fstream>
+#include <map>
+#include <unordered_map>
+#include <utility>
+#include <list>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+struct InfoEstado
+{
+    unordered_map<string, int> partidos; 
+
+    string partidoGanador; 
+
+    int votosGanador; 
+
+    int compromisarios; 
+};
+
+using Estado = string; 
+
+class Elecciones
+{
+private:
+
+    unordered_map<Estado, InfoEstado> regiones; 
+
+public:
+
+    void nuevo_estado(const string& nombre, int numCompromisarios)
+    {
+        auto it = regiones.find(nombre); 
+
+        if (it == regiones.end())
+        {
+            InfoEstado info = { {}, "", 0, numCompromisarios};
+
+            regiones.insert({ nombre, info });
+        }
+        else
+            throw domain_error("Estado ya existente");
+    }
+
+    void sumar_votos(const string& estado, const string& partido, int numVotos)
+    {
+        auto it = regiones.find(estado);
+
+        if (it != regiones.end())
+        {
+            it->second.partidos[partido] += numVotos;
+
+            if (it->second.partidos[partido] >= it->second.votosGanador)
+            {
+                it->second.partidoGanador = partido;
+                it->second.votosGanador = numVotos;
+            }
+        }
+
+        else
+            throw domain_error("Estado no existente");
+    }
+
+    string ganador_en(const string& estado) const
+    {
+        auto it = regiones.find(estado);
+
+        if (it != regiones.end())
+            return it->second.partidoGanador;
+        else
+            throw domain_error("Estado no encontrado");
+    }
+
+    vector<pair<string, int>> resultados() const
+    {
+        map<string, int> auxiliar; 
+
+        for (auto i = regiones.begin(); i != regiones.end(); i++)
+        {
+            auto j = auxiliar.find(i->second.partidoGanador);
+
+            if (j == auxiliar.end())
+                auxiliar.insert({ i->second.partidoGanador, i->second.compromisarios });
+            else
+                j->second += i->second.compromisarios; 
+        }
+
+        vector<pair<string, int>> listado; 
+
+        for (auto i : auxiliar)
+            listado.push_back(make_pair(i.first, i.second));
+
+        return listado; 
+    }
+};
+
+void resuelve(Elecciones* eleccion, string accion)
+{
+    try 
+    {
+        if (accion == "nuevo_estado")
+        {
+            string estado;
+            cin >> estado;
+
+            int compromisarios;
+            cin >> compromisarios;
+
+            eleccion->nuevo_estado(estado, compromisarios);
+        }
+
+        else if (accion == "sumar_votos")
+        {
+            string estado, partido;
+            cin >> estado >> partido;
+
+            int votos;
+            cin >> votos;
+
+            eleccion->sumar_votos(estado, partido, votos);
+        }
+
+        else if (accion == "ganador_en")
+        {
+            string estado;
+            cin >> estado;
+
+            cout << "Ganador en " << estado << ": " << eleccion->ganador_en(estado) << "\n";
+        }
+
+        else
+        {
+            vector<pair<string, int>> listado = eleccion->resultados();
+
+            for (auto i : listado)
+                cout << i.first << " " << i.second << "\n";
+        }
+    }
+
+    catch (domain_error& e) 
+    {
+        cout << e.what() << '\n';
+    }
+}
+
+bool resuelveCaso()
+{
+    Elecciones* eleccion = new Elecciones; 
+
+    string accion; 
+    cin >> accion; 
+
+    if (!cin)
+        return false; 
+
+    while (accion != "FIN")
+    {
+        resuelve(eleccion, accion);
+
+        cin >> accion; 
+    }
+
+    cout << "---\n"; 
+
+    return true;
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    while (resuelveCaso());
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

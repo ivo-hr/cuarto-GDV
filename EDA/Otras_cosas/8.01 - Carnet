@@ -1,0 +1,222 @@
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <fstream>
+#include <map>
+#include <unordered_map>
+#include <utility>
+#include <list>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+using DNI = string; 
+
+int MAX_PUNTOS = 15; 
+
+class Carnet
+{
+private:
+
+    unordered_map<DNI, int> carnet;  
+
+    vector<int> conductoresPuntos;
+
+
+public:
+
+    Carnet()
+    {
+        conductoresPuntos = vector<int>(MAX_PUNTOS + 1); 
+
+        for (int i = 0; i < MAX_PUNTOS + 1; i++)
+            conductoresPuntos[i] = 0; 
+    }
+
+    void nuevo(const string& DNI)
+    {
+        auto it = carnet.find(DNI); 
+
+        if (it == carnet.end())
+        {
+            carnet.insert({ DNI, 15 });
+
+            conductoresPuntos[15]++; 
+        }
+        else
+            throw domain_error("Conductor duplicado");
+    }
+
+    void quitar(const string& DNI, int puntos)
+    {
+        auto it = carnet.find(DNI);
+
+        if (it != carnet.end())
+        {
+            conductoresPuntos[it->second]--;
+
+            if (it->second - puntos < 0)
+                it->second = 0;
+            else
+                it->second -= puntos;
+
+            conductoresPuntos[it->second]++;
+        }
+
+        else
+            throw domain_error("Conductor inexistente");
+    }
+
+    //void recuperar(const string& DNI, int puntos)
+    //{
+    //    auto it = carnet.find(DNI);
+    //    if (it != carnet.end())
+    //    {
+    //        it->second += puntos;
+    //        if (it->second > MAX_PUNTOS)
+    //            it->second = MAX_PUNTOS;
+    //    }
+    //    else
+    //        throw domain_error("Conductor inexistente");
+    //}
+
+    int consultar(const string& DNI)
+    {
+        auto it = carnet.find(DNI);
+
+        if (it != carnet.end())
+            return it->second; 
+        else
+            throw domain_error("Conductor inexistente");
+    }
+
+    int cuantos_con_puntos(int puntos)
+    {
+        if (puntos < 0 || puntos > MAX_PUNTOS)
+            throw domain_error("Puntos no validos");
+
+        return conductoresPuntos[puntos];
+    }
+
+    /*list<string> lista_por_puntos(int puntos)
+    {
+        if (puntos < 0 || puntos > MAX_PUNTOS)
+            throw domain_error("Puntos no validos");
+        else
+        {
+            list<string> conductores; 
+            for (auto i : carnet)
+            {
+                if (i.second == puntos)
+                    conductores.push_front(i.first); 
+            }
+            return conductores; 
+        }
+    }*/
+};
+
+bool resuelveCaso()
+{
+    string comando;
+    cin >> comando;
+
+    if (!cin) 
+        return false;
+
+    Carnet* carnet = new Carnet;
+
+    while (comando != "FIN") 
+    {
+        try 
+        {
+            if (comando == "nuevo") 
+            {
+                string DNI;
+                cin >> DNI; 
+
+                carnet->nuevo(DNI); 
+            }
+
+            else if (comando == "cuantos_con_puntos") 
+            {
+                int puntos; 
+                cin >> puntos;
+
+                int points = carnet->cuantos_con_puntos(puntos); 
+
+                cout << "Con " << puntos << " puntos hay " << points << "\n"; 
+            }
+
+            else if (comando == "quitar") 
+            {
+                string DNI;
+                int puntos; 
+
+                cin >> DNI >> puntos;
+
+                carnet->quitar(DNI, puntos); 
+            }
+
+            //else if (comando == "recuperar")
+            //{
+            //    string DNI;
+            //    cin >> DNI;
+            //    int puntos;
+            //    cin >> puntos;
+            //    carnet->recuperar(DNI, puntos);
+            //}
+
+            else //if (comando == "consultar")
+            {
+                string DNI;
+                cin >> DNI;
+
+                int points = carnet->consultar(DNI); 
+
+                cout << "Puntos de " << DNI << ": " << points << "\n";
+            }
+
+            //else
+            //{
+            //    int puntos;
+            //    cin >> puntos;
+            //    list<string> listado = carnet->lista_por_puntos(puntos); 
+            //    cout << "Tienen " << puntos << " puntos:"; 
+            //    for (auto i : listado)
+            //        cout << " " << i;
+            //    cout << "\n"; 
+            //}
+        }
+
+        catch (std::exception& e) {
+            cout << "ERROR: " << e.what() << "\n";
+        }
+
+        cin >> comando;
+    }
+
+    cout << "---\n";
+
+    return true;
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    while (resuelveCaso());
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}

@@ -1,0 +1,156 @@
+﻿// David Brey Plaza + Eva :)
+
+#include <unordered_map>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+using diccionario = map<string, int>;
+
+void resolver(diccionario viejo, diccionario nuevo)
+{
+    auto itViejo = viejo.begin();
+    auto itNuevo = nuevo.begin();
+
+    vector<string>nuevos, eliminados, cambiados;
+
+    while (itViejo != viejo.end() || itNuevo != nuevo.end())
+    {
+        if (itViejo == viejo.end() && itNuevo != nuevo.end())
+        {
+            nuevos.push_back(itNuevo->first);
+            itNuevo++;
+        }
+
+        else if (itViejo != viejo.end() && itNuevo == nuevo.end())
+        {
+            eliminados.push_back(itViejo->first);
+            itViejo++;
+        }
+
+        else
+        {
+            if (itViejo->first == itNuevo->first) 
+            {
+                if (itViejo->second != itNuevo->second)
+                    cambiados.push_back(itViejo->first);
+
+                itViejo++;
+                itNuevo++;
+            }
+
+            else if (itViejo->first > itNuevo->first)
+            {
+                nuevos.push_back(itNuevo->first);
+                itNuevo++;
+            }
+
+            else
+            {
+                eliminados.push_back(itViejo->first);
+                itViejo++;
+            }
+        }
+    }
+
+    if (nuevos.size() == 0 && 
+        eliminados.size() == 0 &&
+        cambiados.size() == 0)
+        cout << "Sin cambios\n";
+
+    else
+    {
+        if (nuevos.size() != 0)
+        {
+            cout << "+";
+
+            for (auto& n : nuevos)
+                cout << " " << n;
+
+            cout << "\n";
+        }
+
+        if (eliminados.size() != 0)
+        {
+            cout << "-";
+
+            for (auto& n : eliminados)
+                cout << " " << n;
+
+            cout << "\n";
+        }
+
+        if (cambiados.size() != 0)
+        {
+            cout << "*";
+
+            for (auto& n : cambiados)
+                cout << " " << n;
+
+            cout << "\n";
+        }
+    }
+}
+
+void changeDiccionario(diccionario& v)
+{
+    string clave;
+    int valor;
+
+    string linea;
+    getline(cin, linea);
+    stringstream n(linea);
+
+    while (n >> clave >> valor)
+        v[clave] = valor;
+}
+
+void resuelveCaso() 
+{
+    diccionario viejo;
+    diccionario nuevo;
+
+    changeDiccionario(viejo); 
+    changeDiccionario(nuevo); 
+
+    cout << " "; 
+
+    resolver(viejo, nuevo);
+
+    cout << "---\n";
+
+}
+
+int main()
+{
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+    int n; 
+    cin >> n; 
+
+    string linea; 
+    getline(cin, linea); 
+
+    for (int i = 0; i < n; i++)
+        resuelveCaso(); 
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}
