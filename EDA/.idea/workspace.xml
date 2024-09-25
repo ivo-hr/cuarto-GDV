@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="282b4a5d-fff5-4be0-b497-45688b6d40f6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../MARP/juez1_esavl/TreeSet_AVL.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/c_cpp_properties.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/c_cpp_properties.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Otras_cosas/0-2duplC.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MARP/Código C++ TADs bintree y set-20220908/bintree_eda.h" beforeDir="false" afterPath="$PROJECT_DIR$/../MARP/bintree_eda.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MARP/Código C++ TADs bintree y set-20220908/set_eda.h" beforeDir="false" afterPath="$PROJECT_DIR$/../MARP/set_eda.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MARP/TreeSet_AVL.h" beforeDir="false" afterPath="$PROJECT_DIR$/../MARP/TreeSet_AVL.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2mCTe0ZIlvCwEUTj4SPYxCHLxTQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C/C++ File.0-5duplNum.cpp.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Otras_cosas/duplnum/0-5duplNum.cpp&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="0-5duplNum.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$/Otras_cosas/duplnum" PASS_PARENT_ENVS_2="true" PROJECT_NAME="EDA" TARGET_NAME="0-5duplNum.cpp" CONFIG_NAME="0-5duplNum.cpp">
+      <option name="sourceFile" value="$PROJECT_DIR$/Otras_cosas/duplnum/0-5duplNum.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="282b4a5d-fff5-4be0-b497-45688b6d40f6" name="Changes" comment="" />
+      <created>1726579650382</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726579650382</updated>
+      <workItem from="1726579651454" duration="150000" />
+      <workItem from="1726580697889" duration="44000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

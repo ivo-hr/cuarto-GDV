@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/temps.dir/divVector.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

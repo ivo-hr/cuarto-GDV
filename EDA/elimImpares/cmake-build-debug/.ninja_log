@@ -1,0 +1,13 @@
+# ninja log v6
+4	320	1726666045760096451	CMakeFiles/elimImpares.dir/main.cpp.o.ddi	dd70476c1fa253c8
+321	333	1726666046086763139	CMakeFiles/elimImpares.dir/CXX.dd	c2ce959d809c6849
+321	333	1726666046086763139	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/elimImpares/cmake-build-debug/CMakeFiles/elimImpares.dir/CXXModules.json	c2ce959d809c6849
+321	333	1726666046086763139	CMakeFiles/elimImpares.dir/main.cpp.o.modmap	c2ce959d809c6849
+333	1493	1726666046086763139	CMakeFiles/elimImpares.dir/main.cpp.o	28a0d82158f39342
+1494	1607	1726666047250096545	elimImpares	62f5d4186eb78cb0
+3	311	1726666073710098196	CMakeFiles/elimImpares.dir/main.cpp.o.ddi	dd70476c1fa253c8
+312	322	1726666074020098216	CMakeFiles/elimImpares.dir/CXX.dd	c2ce959d809c6849
+312	322	1726666074020098216	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/elimImpares/cmake-build-debug/CMakeFiles/elimImpares.dir/CXXModules.json	c2ce959d809c6849
+312	322	1726666074020098216	CMakeFiles/elimImpares.dir/main.cpp.o.modmap	c2ce959d809c6849
+323	1595	1726666074030098217	CMakeFiles/elimImpares.dir/main.cpp.o	28a0d82158f39342
+1595	1706	1726666075303431629	elimImpares	62f5d4186eb78cb0

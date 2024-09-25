@@ -1,0 +1,13 @@
+# ninja log v6
+1	260	1726668110120225639	CMakeFiles/compararListaOrd.dir/main.cpp.o.ddi	503041a7e9fabe10
+260	267	1726668110386892323	CMakeFiles/compararListaOrd.dir/CXX.dd	c9aff962e609cbc3
+260	267	1726668110386892323	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/compararListaOrd/cmake-build-debug/CMakeFiles/compararListaOrd.dir/CXXModules.json	c9aff962e609cbc3
+260	267	1726668110386892323	CMakeFiles/compararListaOrd.dir/main.cpp.o.modmap	c9aff962e609cbc3
+268	2032	1726668110386892323	CMakeFiles/compararListaOrd.dir/main.cpp.o	764db692c87da5e8
+2033	2143	1726668112153559100	compararListaOrd	80911c407dbeb6f2
+3	266	1726668121806893035	CMakeFiles/compararListaOrd.dir/main.cpp.o.ddi	503041a7e9fabe10
+266	274	1726668122070226385	CMakeFiles/compararListaOrd.dir/CXX.dd	c9aff962e609cbc3
+266	274	1726668122070226385	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/compararListaOrd/cmake-build-debug/CMakeFiles/compararListaOrd.dir/CXXModules.json	c9aff962e609cbc3
+266	274	1726668122070226385	CMakeFiles/compararListaOrd.dir/main.cpp.o.modmap	c9aff962e609cbc3
+274	1859	1726668122076893052	CMakeFiles/compararListaOrd.dir/main.cpp.o	764db692c87da5e8
+1859	1984	1726668123663559818	compararListaOrd	80911c407dbeb6f2

@@ -1,0 +1,7 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/duplNum.dir/main.cpp.o: dyndep
+
+build CMakeFiles/duplNum.dir/duplB.cpp.o: dyndep
+
+build CMakeFiles/duplNum.dir/duplC.cpp.o: dyndep
+

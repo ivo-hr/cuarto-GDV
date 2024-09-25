@@ -1,0 +1,3 @@
+/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/compararListaDesord/cmake-build-debug/CMakeFiles/compararListaDesord.dir
+/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/compararListaDesord/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/compararListaDesord/cmake-build-debug/CMakeFiles/rebuild_cache.dir

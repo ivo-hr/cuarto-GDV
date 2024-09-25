@@ -1,0 +1,5 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/temps.dir/main.cpp.o: dyndep
+
+build CMakeFiles/temps.dir/divVector.cpp.o: dyndep
+

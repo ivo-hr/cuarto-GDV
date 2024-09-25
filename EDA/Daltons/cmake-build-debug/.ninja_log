@@ -1,0 +1,23 @@
+# ninja log v6
+6	279	1726582741790309321	CMakeFiles/Daltons.dir/main.cpp.o.ddi	fd840d2c41b2908f
+280	290	1726582742073642672	CMakeFiles/Daltons.dir/CXX.dd	ad05510580932951
+280	290	1726582742073642672	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Daltons/cmake-build-debug/CMakeFiles/Daltons.dir/CXXModules.json	ad05510580932951
+280	290	1726582742073642672	CMakeFiles/Daltons.dir/main.cpp.o.modmap	ad05510580932951
+290	1532	1726582742073642672	CMakeFiles/Daltons.dir/main.cpp.o	db8c39d38497804
+1533	1666	1726582743316976083	Daltons	4fdf2b0e11a36c1a
+3	249	1726582822000314329	CMakeFiles/Daltons.dir/main.cpp.o.ddi	fd840d2c41b2908f
+249	255	1726582822246981012	CMakeFiles/Daltons.dir/CXX.dd	ad05510580932951
+249	255	1726582822246981012	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Daltons/cmake-build-debug/CMakeFiles/Daltons.dir/CXXModules.json	ad05510580932951
+249	255	1726582822246981012	CMakeFiles/Daltons.dir/main.cpp.o.modmap	ad05510580932951
+2	240	1726582847963649284	CMakeFiles/Daltons.dir/main.cpp.o.ddi	fd840d2c41b2908f
+240	248	1726582848200315966	CMakeFiles/Daltons.dir/CXX.dd	ad05510580932951
+240	248	1726582848200315966	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Daltons/cmake-build-debug/CMakeFiles/Daltons.dir/CXXModules.json	ad05510580932951
+240	248	1726582848200315966	CMakeFiles/Daltons.dir/main.cpp.o.modmap	ad05510580932951
+248	1539	1726582848210315966	CMakeFiles/Daltons.dir/main.cpp.o	db8c39d38497804
+1539	1663	1726582849500316047	Daltons	4fdf2b0e11a36c1a
+3	359	1726583174513669673	CMakeFiles/Daltons.dir/main.cpp.o.ddi	fd840d2c41b2908f
+359	366	1726583174867003029	CMakeFiles/Daltons.dir/CXX.dd	ad05510580932951
+359	366	1726583174867003029	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Daltons/cmake-build-debug/CMakeFiles/Daltons.dir/CXXModules.json	ad05510580932951
+359	366	1726583174867003029	CMakeFiles/Daltons.dir/main.cpp.o.modmap	ad05510580932951
+367	2224	1726583174877003029	CMakeFiles/Daltons.dir/main.cpp.o	db8c39d38497804
+2224	2386	1726583176733669812	Daltons	4fdf2b0e11a36c1a

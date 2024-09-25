@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/compararListaDesord.dir/simpleSafe.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

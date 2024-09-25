@@ -1,0 +1,23 @@
+# ninja log v6
+2	240	1726666956966820301	CMakeFiles/anagrama.dir/main.cpp.o.ddi	e3964c502b6accd
+240	248	1726666957213486984	CMakeFiles/anagrama.dir/CXX.dd	534d50d1dbf3a3c3
+240	248	1726666957213486984	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/anagrama/cmake-build-debug/CMakeFiles/anagrama.dir/CXXModules.json	534d50d1dbf3a3c3
+240	248	1726666957213486984	CMakeFiles/anagrama.dir/main.cpp.o.modmap	534d50d1dbf3a3c3
+3	171	1726666978176821627	CMakeFiles/anagrama.dir/main.cpp.o.ddi	e3964c502b6accd
+171	180	1726666978343488304	CMakeFiles/anagrama.dir/CXX.dd	534d50d1dbf3a3c3
+171	180	1726666978343488304	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/anagrama/cmake-build-debug/CMakeFiles/anagrama.dir/CXXModules.json	534d50d1dbf3a3c3
+171	180	1726666978343488304	CMakeFiles/anagrama.dir/main.cpp.o.modmap	534d50d1dbf3a3c3
+180	1338	1726666978353488304	CMakeFiles/anagrama.dir/main.cpp.o	92c45e60a0da3687
+1339	1460	1726666979513488377	anagrama	c2ddba703979a6a3
+3	203	1726667254043505520	CMakeFiles/anagrama.dir/main.cpp.o.ddi	e3964c502b6accd
+203	213	1726667254246838865	CMakeFiles/anagrama.dir/CXX.dd	534d50d1dbf3a3c3
+203	213	1726667254246838865	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/anagrama/cmake-build-debug/CMakeFiles/anagrama.dir/CXXModules.json	534d50d1dbf3a3c3
+203	213	1726667254246838865	CMakeFiles/anagrama.dir/main.cpp.o.modmap	534d50d1dbf3a3c3
+214	1436	1726667254256838866	CMakeFiles/anagrama.dir/main.cpp.o	92c45e60a0da3687
+1436	1553	1726667255480172276	anagrama	c2ddba703979a6a3
+3	190	1726667584670192830	CMakeFiles/anagrama.dir/main.cpp.o.ddi	e3964c502b6accd
+190	203	1726667584856859507	CMakeFiles/anagrama.dir/CXX.dd	534d50d1dbf3a3c3
+190	203	1726667584856859507	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/anagrama/cmake-build-debug/CMakeFiles/anagrama.dir/CXXModules.json	534d50d1dbf3a3c3
+190	203	1726667584856859507	CMakeFiles/anagrama.dir/main.cpp.o.modmap	534d50d1dbf3a3c3
+203	1339	1726667584870192842	CMakeFiles/anagrama.dir/main.cpp.o	92c45e60a0da3687
+1339	1454	1726667586006859580	anagrama	c2ddba703979a6a3
