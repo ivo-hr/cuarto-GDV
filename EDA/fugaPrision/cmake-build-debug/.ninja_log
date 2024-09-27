@@ -1,0 +1,19 @@
+# ninja log v6
+5	368	1727447228835673373	CMakeFiles/fugaPrision.dir/main.cpp.o.ddi	f9d709c6323d4efa
+368	378	1727447229205682031	CMakeFiles/fugaPrision.dir/CXX.dd	40773a39ba8b0502
+368	378	1727447229205682031	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/fugaPrision/cmake-build-debug/CMakeFiles/fugaPrision.dir/CXXModules.json	40773a39ba8b0502
+368	378	1727447229205682031	CMakeFiles/fugaPrision.dir/main.cpp.o.modmap	40773a39ba8b0502
+378	1740	1727447229209015442	CMakeFiles/fugaPrision.dir/main.cpp.o	aa3ff35c72ae4b79
+1741	1859	1727447230572380673	fugaPrision	34ea4d4ba8faee2c
+3	298	1727447516289065489	CMakeFiles/fugaPrision.dir/main.cpp.o.ddi	f9d709c6323d4efa
+299	306	1727447516585739097	CMakeFiles/fugaPrision.dir/CXX.dd	40773a39ba8b0502
+299	306	1727447516585739097	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/fugaPrision/cmake-build-debug/CMakeFiles/fugaPrision.dir/CXXModules.json	40773a39ba8b0502
+299	306	1727447516585739097	CMakeFiles/fugaPrision.dir/main.cpp.o.modmap	40773a39ba8b0502
+306	1633	1727447516592405920	CMakeFiles/fugaPrision.dir/main.cpp.o	aa3ff35c72ae4b79
+1633	1746	1727447517919103627	fugaPrision	34ea4d4ba8faee2c
+4	182	1727448235205885753	CMakeFiles/fugaPrision.dir/main.cpp.o.ddi	f9d709c6323d4efa
+182	188	1727448235385889964	CMakeFiles/fugaPrision.dir/CXX.dd	40773a39ba8b0502
+182	188	1727448235385889964	/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/fugaPrision/cmake-build-debug/CMakeFiles/fugaPrision.dir/CXXModules.json	40773a39ba8b0502
+182	188	1727448235385889964	CMakeFiles/fugaPrision.dir/main.cpp.o.modmap	40773a39ba8b0502
+189	1363	1727448235392556787	CMakeFiles/fugaPrision.dir/main.cpp.o	aa3ff35c72ae4b79
+1364	1471	1727448236565917573	fugaPrision	34ea4d4ba8faee2c
