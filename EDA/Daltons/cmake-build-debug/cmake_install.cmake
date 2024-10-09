@@ -1,4 +1,4 @@
-# Install script for directory: /home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Daltons
+# Install script for directory: /home/henrii/Documents/cuarto-GDV/EDA/Daltons
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/h21/Documents/00_uni_stuff/cuarto-GDV/EDA/Daltons/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/henrii/Documents/cuarto-GDV/EDA/Daltons/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
