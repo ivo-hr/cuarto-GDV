@@ -30,3 +30,21 @@
 *.exe
 *.out
 *.app
+# Unity specific folders and extensions
+# Ignore hidden files
+.*
+
+# Ignore temporary files
+*.tmp
+
+# Ignore Unity generated folders
+Temp/
+Build/
+*/Library/
+*/UserSettings/
+*/OffGame/
+
+# Ignore other Unity related files if necessary
+*.userprefs
+/SON/soundPlayground/Library
+/SON/soundPlayground/Logs
