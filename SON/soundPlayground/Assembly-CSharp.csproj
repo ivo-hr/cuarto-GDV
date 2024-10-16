@@ -59,11 +59,15 @@
     <UnityVersion>2022.3.50f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/home/henrii/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.4/Analyzers/Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="/home/henrii/Unity/Hub/Editor/2022.3.50f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/henrii/Unity/Hub/Editor/2022.3.50f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/MusicPlayer.cs" />
+    <Compile Include="Assets/Scripts/IntermitentSound.cs" />
+    <Compile Include="Assets/Scripts/Slice.cs" />
+    <Compile Include="Assets/Scripts/SoundDisperser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
