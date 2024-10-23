@@ -149,7 +149,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465651241}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c5bc8540a525ce42bd4e837804f0deb, type: 3}
   m_Name: 
@@ -286,24 +286,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEnvironments:
-  - ambientSound: {fileID: 0}
-    intensity: 0
-    soundGroups:
-    - sounds:
-      - {fileID: 0}
-      randomThreshold: 0
-      probabilityMultiplier: 0
-    - sounds:
-      - {fileID: 0}
-      randomThreshold: 0
-      probabilityMultiplier: 0
-  - ambientSound: {fileID: 0}
-    intensity: 0
-    soundGroups:
-    - sounds:
-      - {fileID: 0}
-      randomThreshold: 0
-      probabilityMultiplier: 0
+  - ambientSound: {fileID: 8300000, guid: 797dd217bf796e346836fe6491641fec, type: 3}
+    intensity: 1
+    spatialBlend: 1.1
+    soundGroups: []
 --- !u!135 &614837717
 SphereCollider:
   m_ObjectHideFlags: 0

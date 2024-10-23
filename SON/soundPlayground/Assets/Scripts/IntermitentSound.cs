@@ -9,9 +9,10 @@ using UnityEngine;
 
 public class IntermitentSound : MonoBehaviour {
     [SerializeField]
-    private AudioSource _Speaker01;  // audio source asosicada a la entidad
+    private List<AudioSource> _Speakers;  // audio source asosicada a la entidad
     [Range(0f, 1f )]
-    public float poliphony, minVol, maxVol, SourceVol;  // volumenes máximo y mínimo establecidos y volumen origintal del source
+    public float minVol, maxVol, SourceVol;  // volumenes máximo y mínimo establecidos y volumen origintal del source
+    public int poliphony;// numero maximo de sonidos que se pueden generar a la vez
     [Range(0f, 30f )]
     public float minTime, maxTime;  // intervalo temporal de lanzamiento
     [Range(0, 50)]
@@ -21,27 +22,39 @@ public class IntermitentSound : MonoBehaviour {
     public AudioClip[] pcmData;
     public bool enablePlayMode;
 
+    private Queue<AudioSource> availableSources;
+
     void Awake(){
-        _Speaker01 = GetComponent<AudioSource>();
-        if (_Speaker01 == null) _Speaker01 = gameObject.AddComponent<AudioSource>();        
+        _Speakers = new List<AudioSource>();
+        availableSources = new Queue<AudioSource>(); 
+
+        for(int i = 0; i< poliphony; i++)
+        {
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+            source.loop = false;
+            _Speakers.Add(source);
+            availableSources.Enqueue(source);
+        }       
     }
 
     void Start() {
-        _Speaker01.playOnAwake = false;
-        _Speaker01.loop = false;
-        _Speaker01.volume = 0.1f;
+        foreach (var speaker in _Speakers) {
+            speaker.playOnAwake = false;
+            speaker.volume = 0.1f;
+            speaker.loop = false;
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        if (!enablePlayMode){
-            Debug.Log("NotPlaying");
-            if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                enablePlayMode = true;
-                StartCoroutine("Waitforit");
-            }
-        } else if (enablePlayMode) 
-            if (Input.GetKeyDown(KeyCode.Alpha2)) StopSound();            
+        if (!enablePlayMode  && Input.GetKeyDown(KeyCode.Alpha1)){
+            enablePlayMode = true;
+            StartCoroutine("Waitforit");
+        } else if (enablePlayMode && Input.GetKeyDown(KeyCode.Alpha2)){
+            enablePlayMode = false;
+            StopSound(); 
+        }            
     }
 
 
@@ -51,42 +64,42 @@ public class IntermitentSound : MonoBehaviour {
         float waitTime = Random.Range(minTime, maxTime);
         Debug.Log(waitTime);
 
-        // miramos si hay un clip asignado al source (sirve para la primera vez q se ejecuta)
-        if (_Speaker01.clip == null)     
-            // waitfor seconds suspende la coroutine durante waitTime
-            yield return new WaitForSeconds(waitTime);        
-        
-        // cuando hay clip se añade la long del clip + el tiempo de espera para esperar entre lanzamientos
-        else         
-            yield return new WaitForSeconds(_Speaker01.clip.length + waitTime);        
-        
-        // si esta activado reproducimos sonido
-        if (enablePlayMode) PlaySound();        
+        yield return new WaitForSeconds(waitTime);   
+
+        if (enablePlayMode && availableSources.Count > 0) {
+            PlaySound();
+        }      
     }
 
     void PlaySound() {
-        SetSourceProperties(pcmData[Random.Range(0, pcmData.Length)], minVol, maxVol, distRand, maxDist, spatialBlend);
-        _Speaker01.Play();
-        Debug.Log("back in it");
-        StartCoroutine("Waitforit");
+
+        if(availableSources.Count > 0){
+            AudioSource currentSource = availableSources.Dequeue();
+            SetSourceProperties(currentSource, pcmData[Random.Range(0, pcmData.Length)], minVol, maxVol, distRand, maxDist, spatialBlend);
+            currentSource.Play();
+            StartCoroutine(ReturnSourceToQueue(currentSource));
+        }
+        if (availableSources.Count > 0) {
+            StartCoroutine(Waitforit());
+        }
     }
 
+    IEnumerator ReturnSourceToQueue(AudioSource source) {
+        yield return new WaitForSeconds(source.clip.length);
+        availableSources.Enqueue(source);
+    }
 
-
-    public void SetSourceProperties(AudioClip audioData, float minVol, float maxVol,
+    public void SetSourceProperties(AudioSource source, AudioClip audioData, float minVol, float maxVol,
                                     int minDist, int maxDist, float SpatialBlend) {
-        _Speaker01.loop = false;
-        _Speaker01.maxDistance = maxDist - Random.Range(0f, distRand);
-        _Speaker01.spatialBlend = spatialBlend;
-        _Speaker01.clip = audioData;
-        _Speaker01.volume = SourceVol + Random.Range(minVol, maxVol);
+        source.clip = audioData;
+        source.volume = SourceVol + Random.Range(minVol, maxVol);
+        source.maxDistance = maxDist - Random.Range(0f, distRand);
+        source.spatialBlend = spatialBlend;
     }
-
-
-
 
     void StopSound() {
         enablePlayMode = false;
+        StopAllCoroutines();
         Debug.Log("stop");
     }
 }    
