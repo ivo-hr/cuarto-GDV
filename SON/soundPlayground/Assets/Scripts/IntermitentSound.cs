@@ -23,12 +23,17 @@ public class IntermitentSound : MonoBehaviour {
     public bool enablePlayMode;
 
     private Queue<AudioSource> availableSources;
+    
+    private bool started = false;
 
-    void Awake(){
+    void Start() {
+
+        Debug.Log("IntermitentSound Start");
+
         _Speakers = new List<AudioSource>();
         availableSources = new Queue<AudioSource>(); 
 
-        for(int i = 0; i< poliphony; i++)
+        for(int i = 0; i < poliphony; i++)
         {
             AudioSource source = gameObject.AddComponent<AudioSource>();
             source.playOnAwake = false;
@@ -36,39 +41,60 @@ public class IntermitentSound : MonoBehaviour {
             _Speakers.Add(source);
             availableSources.Enqueue(source);
         }       
-    }
 
-    void Start() {
+        Debug.Log("IntermitentSound Start finished, sources:" + _Speakers.Count);
+
+
         foreach (var speaker in _Speakers) {
             speaker.playOnAwake = false;
             speaker.volume = 0.1f;
             speaker.loop = false;
+
         }
     }
 
     // Update is called once per frame
     void Update() {
-        if (!enablePlayMode  && Input.GetKeyDown(KeyCode.Alpha1)){
-            enablePlayMode = true;
-            StartCoroutine("Waitforit");
-        } else if (enablePlayMode && Input.GetKeyDown(KeyCode.Alpha2)){
-            enablePlayMode = false;
-            StopSound(); 
-        }            
+
+
+        if(enablePlayMode && !started)
+        {
+            started = true;
+            StartAllSounds();
+            Debug.LogWarning("Threshold overcome: All sounds started.");
+        }
+
+        if(!enablePlayMode && started)
+        {
+            started = false;
+            StopAllSounds();
+            Debug.LogWarning("Threshold not overcome: All sounds stopped.");
+        }
     }
 
 
 
-    IEnumerator Waitforit() {
-        // tiempo de espera aleatorio en el intervalo [minTime,maxTime]
-        float waitTime = Random.Range(minTime, maxTime);
-        Debug.Log(waitTime);
+    void StartAllSounds()
+    {
+        Debug.Log("Starting all Sounds");
+        for (int i = 0; i < _Speakers.Count; i++)
+        {
+            StartCoroutine(PlaySoundWithDelay(_Speakers[i]));
+        }
+    }
 
-        yield return new WaitForSeconds(waitTime);   
+    IEnumerator PlaySoundWithDelay(AudioSource source)
+    {
+        while (enablePlayMode)
+        {
+            float waitTime = Random.Range(minTime, maxTime);
+            Debug.Log("Wait time for source "+ source + ": " + waitTime);
+            yield return new WaitForSeconds(waitTime);  // Espera tiempo aleatorio entre cada sonido
 
-        if (enablePlayMode && availableSources.Count > 0) {
             PlaySound();
-        }      
+        }
+
+        yield return null;
     }
 
     void PlaySound() {
@@ -77,30 +103,39 @@ public class IntermitentSound : MonoBehaviour {
             AudioSource currentSource = availableSources.Dequeue();
             SetSourceProperties(currentSource, pcmData[Random.Range(0, pcmData.Length)], minVol, maxVol, distRand, maxDist, spatialBlend);
             currentSource.Play();
+            Debug.Log("Source " + currentSource + "with clip " + currentSource.clip + " playing");
             StartCoroutine(ReturnSourceToQueue(currentSource));
-        }
-        if (availableSources.Count > 0) {
-            StartCoroutine(Waitforit());
         }
     }
 
     IEnumerator ReturnSourceToQueue(AudioSource source) {
         yield return new WaitForSeconds(source.clip.length);
         availableSources.Enqueue(source);
+
+        //End coroutine
+        yield return null;
     }
 
     public void SetSourceProperties(AudioSource source, AudioClip audioData, float minVol, float maxVol,
                                     int minDist, int maxDist, float SpatialBlend) {
         source.clip = audioData;
-        source.volume = SourceVol + Random.Range(minVol, maxVol);
+        source.volume = Mathf.Clamp(SourceVol + Random.Range(minVol, maxVol), minVol, maxVol);
         source.maxDistance = maxDist - Random.Range(0f, distRand);
         source.spatialBlend = spatialBlend;
     }
 
-    void StopSound() {
+    void StopAllSounds()
+    {
         enablePlayMode = false;
         StopAllCoroutines();
-        Debug.Log("stop");
+        foreach (var speaker in _Speakers)
+        {
+            speaker.Stop();
+            if (!availableSources.Contains(speaker))
+            {
+                availableSources.Enqueue(speaker);  // Asegurar que las fuentes activas se reinsertan en la cola
+            }
+        }
     }
 }    
     

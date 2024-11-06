@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 465651244}
   - component: {fileID: 465651243}
   - component: {fileID: 465651242}
+  - component: {fileID: 465651247}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -253,6 +254,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &465651247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465651241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9e2af2dad6830af9f71591ec1f9214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pcmDataHeads:
+  - {fileID: 8300000, guid: b0eb63680ea3ee1ff97e9f07a39beb77, type: 3}
+  - {fileID: 8300000, guid: 0279b44437c92f4cdac5a8b7f0d4f79f, type: 3}
+  pcmDataTails:
+  - {fileID: 8300000, guid: 68dd1bcc951e4fd6f9c6b6978eab6228, type: 3}
+  - {fileID: 8300000, guid: 7ca1930c0b5dd0a0abf40282ce1466f9, type: 3}
+  pcmDataCasing:
+  - {fileID: 8300000, guid: 21bf7b3edf861fedcb6665e933e41986, type: 3}
+  - {fileID: 8300000, guid: 85742a431b7714163a8990c4707ab0ea, type: 3}
+  - {fileID: 8300000, guid: 91da5b8814fb322e6a9e9e2e32959211, type: 3}
+  overlapTime: 0.0291
 --- !u!1 &614837715
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,10 +310,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEnvironments:
-  - ambientSound: {fileID: 8300000, guid: 797dd217bf796e346836fe6491641fec, type: 3}
-    intensity: 1
+  - ambientSound: {fileID: 8300000, guid: 22f40998b2a7b4f628950c4e27f4b896, type: 3}
+    intensity: 0.461
     spatialBlend: 1.1
-    soundGroups: []
+    soundGroups:
+    - sounds:
+      - {fileID: 8300000, guid: a3bf8c2eae6a584f6a1d0a8ca4556140, type: 3}
+      - {fileID: 8300000, guid: ba47b95ab5fb88d85aa6bb713cadbf83, type: 3}
+      - {fileID: 8300000, guid: b5fcbb640b2d10e879d6122429a8ae4a, type: 3}
+      - {fileID: 8300000, guid: 34843bc373987acb1a401a5fd9ebfe50, type: 3}
+      - {fileID: 8300000, guid: 33f18b3a244d6d325985faedb8e0cc6a, type: 3}
+      - {fileID: 8300000, guid: 6ecdee5cdd47f0059b5e0c4fcf51eb23, type: 3}
+      - {fileID: 8300000, guid: 1a6f40180c3d68aa48608995e39eb4b9, type: 3}
+      - {fileID: 8300000, guid: 805bc5d30b978d1a9a3e9e8339fff2cf, type: 3}
+      - {fileID: 8300000, guid: be1e304222904764eae57f1342ce7a2b, type: 3}
+      - {fileID: 8300000, guid: 9df62a1a1ff39c87faafc26b5e556200, type: 3}
+      - {fileID: 8300000, guid: f9e2842b099bf438494d16250ca2ad06, type: 3}
+      - {fileID: 8300000, guid: 29cc5139954686d649cd5f1304c78c08, type: 3}
+      - {fileID: 8300000, guid: 791448db2d0b0e3968fce6c07f8978fc, type: 3}
+      - {fileID: 8300000, guid: 960f090598cb066ccbf4e0cbaa83dbf4, type: 3}
+      - {fileID: 8300000, guid: c8a99789ef9fe3b5a8c218598be2f533, type: 3}
+      - {fileID: 8300000, guid: 5af76a766ab8bfbcfa9008759c7c06d9, type: 3}
+      - {fileID: 8300000, guid: 798df69c7acdeded2ad72498c0db7821, type: 3}
+      randomThreshold: 0.3
+      probabilityMultiplier: 6.83
+      poliphony: 5
+      intermitentSound: {fileID: 0}
+  - ambientSound: {fileID: 8300000, guid: a6d6b1ad9640fe2e5bcddf564242d7ee, type: 3}
+    intensity: 0.461
+    spatialBlend: 1.1
+    soundGroups:
+    - sounds:
+      - {fileID: 8300000, guid: e34f9626a7047c659ab0920b1423ae38, type: 3}
+      - {fileID: 8300000, guid: 60eef0ead2fa7a2c392892a3de7c388e, type: 3}
+      - {fileID: 8300000, guid: 52b7d293ae56c06c2a85540b8ad5f064, type: 3}
+      - {fileID: 8300000, guid: f12f9a41556ef21ba9a373b2900c9e71, type: 3}
+      - {fileID: 8300000, guid: 1e1fb8c4b6ba8528090bb201493db994, type: 3}
+      randomThreshold: 0.3
+      probabilityMultiplier: 2.66
+      poliphony: 2
+      intermitentSound: {fileID: 0}
+    - sounds:
+      - {fileID: 8300000, guid: fb72c8a567cd8cd1fa44e205d0a3eb7c, type: 3}
+      - {fileID: 8300000, guid: a9c443cf6041447adb53f658fc91733b, type: 3}
+      - {fileID: 8300000, guid: fa3c93dea2e1a5a6188006693e2829d9, type: 3}
+      - {fileID: 8300000, guid: 54e059eb3fcf48402a8d6329dd5dabb9, type: 3}
+      - {fileID: 8300000, guid: 9c70b4d87f11b0eac9d3eda87a50787c, type: 3}
+      - {fileID: 8300000, guid: 1d727221bc80554e08ff81f99fb7d406, type: 3}
+      - {fileID: 8300000, guid: e81cf7b4a7b802701a09c9f585ab5045, type: 3}
+      randomThreshold: 0.3
+      probabilityMultiplier: 6.72
+      poliphony: 3
+      intermitentSound: {fileID: 0}
 --- !u!135 &614837717
 SphereCollider:
   m_ObjectHideFlags: 0
