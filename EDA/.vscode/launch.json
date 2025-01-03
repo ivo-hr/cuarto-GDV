@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/enriq/Documents/00_uni_stuff/cuarto-GDV/EDA",
-      "program": "c:/Users/enriq/Documents/00_uni_stuff/cuarto-GDV/EDA/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
