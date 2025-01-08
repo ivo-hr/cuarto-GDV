@@ -58,7 +58,19 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "iostream": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "array": "cpp",
+    "deque": "cpp",
+    "format": "cpp",
+    "initializer_list": "cpp",
+    "list": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "vector": "cpp",
+    "xhash": "cpp",
+    "xstring": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp"
   },
   "cmake.sourceDirectory": "C:/Users/enriq/Documents/GitHub/cuarto-GDV/EDA/compararListaOrd"
 }

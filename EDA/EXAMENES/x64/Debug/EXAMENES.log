@@ -1,0 +1,3 @@
+﻿  T8PlantillaSalaUrgencias.cpp
+MSVCRTD.lib(exe_winmain.obj) : error LNK2019: unresolved external symbol WinMain referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\enriq\Documents\00_uni_stuff\cuarto-GDV\EDA\EXAMENES\x64\Debug\EXAMENES.exe : fatal error LNK1120: 1 unresolved externals
