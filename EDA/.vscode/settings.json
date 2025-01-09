@@ -70,7 +70,8 @@
     "xhash": "cpp",
     "xstring": "cpp",
     "xtree": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "ostream": "cpp"
   },
   "cmake.sourceDirectory": "C:/Users/enriq/Documents/GitHub/cuarto-GDV/EDA/compararListaOrd"
 }

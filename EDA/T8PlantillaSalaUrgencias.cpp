@@ -46,6 +46,7 @@ public:
         
         if (pacientes.find(p) != pacientes.end())
             throw domain_error("Paciente repetido");
+
         if (g < 1 || g > 3)
             throw domain_error("Gravedad incorrecta");
         
@@ -66,11 +67,12 @@ public:
                 info.pos = graves.insert(graves.end(), p);
 
                 break;
+
+            }
             
             pacientes.insert({p, info}); //Se inserta en el mapa
-        }
-
     }
+
     
     // coste:
     int gravedad_actual(paciente p) const {
@@ -85,19 +87,27 @@ public:
         if (leves.empty() && moderados.empty() && graves.empty())
             throw domain_error("No hay pacientes");
         
+        paciente p; //Se declara el paciente
+
         if (!graves.empty()) {
-                paciente p = graves.front();
-                graves.pop_front();
-                return p;
-        } else if (!moderados.empty()) {
-            paciente p = moderados.front();
+            p = graves.front();
+            graves.pop_front();
+        } 
+        else if (!moderados.empty()) {
+            p = moderados.front();
             moderados.pop_front();
-            return p;
-        } else {
-            paciente p = leves.front();
+        } 
+        else {
+            p = leves.front();
             leves.pop_front();
-            return p;
         }
+
+        
+        pacientes.erase(p);
+        
+        sanos.insert(p); //Se añade a los sanos
+
+        return p;
     }
 
     // coste:
@@ -105,32 +115,40 @@ public:
         if (pacientes.find(p) == pacientes.end())
             throw domain_error("Paciente inexistente");
         
-        info_paciente info = pacientes.at(p);
+        info_paciente& info = pacientes.at(p);
 
         switch (info.g) {
             case 1:
                 leves.erase(info.pos);
 
                 sanos.insert(p);
+
+                pacientes.erase(p);
                 break;
             case 2:
                 moderados.erase(info.pos);
 
-                leves.push_back(p);
+                //Poner al paciente el primero en leves
+                leves.push_front(p);
                 info.pos = --leves.end();
+                info.g--;
                 break;
             case 3:
                 graves.erase(info.pos);
 
-                moderados.push_back(p);
+                moderados.push_front(p);
                 info.pos = --moderados.end();
+                info.g--;
                 break;
         }
+
+
     }
 
     // coste:
-    list<paciente> recuperados() const {
-        return list<paciente>(sanos.begin(), sanos.end());
+    
+    set<paciente> recuperados() const {
+        return sanos;
     }
 
 
