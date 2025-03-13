@@ -10,7 +10,7 @@ dias = 10
 visitantes <- sample(50:200, dias, replace = TRUE)
 
 #Generar el gasto medio de cada visitante en cada día
-gasto_por_visitante <- runif(dias, min = 30, max = 100)
+gasto_por_visitante <- runif(dias, min = 30, max = 100) 
 
 # Generar datos de ingresos multiplicando el gasto medio por el número de visitantes
 ingresos <- visitantes * gasto_por_visitante
