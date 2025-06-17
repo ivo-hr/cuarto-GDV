@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exEneRunner", "exEneRunner.vcxproj", "{51FA8F4E-8117-480B-82B2-E4810AE23525}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ejerc", "Ejerc", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		arbEspejo.cpp = arbEspejo.cpp
+		bintree_eda.h = bintree_eda.h
+		eherc2_22.cpp = eherc2_22.cpp
+		ejerc1_22.cpp = ejerc1_22.cpp
+		ejerc2_23.cpp = ejerc2_23.cpp
+		ejerc2_24.cpp = ejerc2_24.cpp
+		extkwewe.cpp = extkwewe.cpp
+		jun22.cpp = jun22.cpp
+		JUN22_3.cpp = JUN22_3.cpp
+		jun23_3.cpp = jun23_3.cpp
+		kwewe.h = kwewe.h
+		..\..\queue_eda.h = ..\..\queue_eda.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Debug|x64.ActiveCfg = Debug|x64
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Debug|x64.Build.0 = Debug|x64
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Debug|x86.ActiveCfg = Debug|Win32
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Debug|x86.Build.0 = Debug|Win32
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Release|x64.ActiveCfg = Release|x64
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Release|x64.Build.0 = Release|x64
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Release|x86.ActiveCfg = Release|Win32
+		{51FA8F4E-8117-480B-82B2-E4810AE23525}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D15135D-EF6F-433C-BF5F-A305861BE796}
+	EndGlobalSection
+EndGlobal
